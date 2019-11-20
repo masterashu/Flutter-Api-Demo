@@ -3,8 +3,10 @@ class LessonData {
   String introText = "";
   String studyText = "";
   List<Test1Data> test1 = [];
-  dynamic test2;
-  dynamic test3;
+  List<Test2Data> test2 = [];
+  List<Test3Data> test3 = [];
+  List<Test4Data> test4 = [];
+  List<Test6Data> test6 = [];  
 
   LessonData(
       {this.title,
@@ -12,20 +14,40 @@ class LessonData {
       this.studyText,
       this.test1,
       this.test2,
-      this.test3});
+      this.test3,
+      this.test4,
+      this.test6});
 
   factory LessonData.fromJSON(Map<String, dynamic> jsonData) {
     List<Test1Data> test1DataList = [];
     for (var x in jsonData['test1']) {
       test1DataList.add(Test1Data.fromJSON(x));
     }
+    List<Test2Data> test2DataList = [];
+    for (var x in jsonData['test2']) {
+      test2DataList.add(Test2Data.fromJSON(x));
+    }
+    List<Test3Data> test3DataList = [];
+    for (var x in jsonData['test3']) {
+      test3DataList.add(Test3Data.fromJSON(x));
+    }
+    List<Test4Data> test4DataList = [];
+    for (var x in jsonData['test4']) {
+      test4DataList.add(Test4Data.fromJSON(x));
+    }
+    List<Test6Data> test6DataList = [];
+    for (var x in jsonData['test6']) {
+      test6DataList.add(Test6Data.fromJSON(x));
+    }
     return LessonData(
       title: jsonData['title'],
       introText: jsonData['intro_text'],
       studyText: jsonData['study_text'],
       test1: test1DataList,
-      test2: jsonData['test2'],
-      test3: jsonData['test3'],
+      test2: test2DataList,
+      test3: test3DataList,
+      test4: test4DataList,
+      test6: test6DataList,
     );
   }
 }
@@ -154,4 +176,34 @@ class Test4Data {
   }
 }
 
+
+
+class PicturePairChoice {
+  String picture;
+  String description;
+  bool correct;
+
+  PicturePairChoice({this.picture, this.description, this.correct});
+
+  factory PicturePairChoice.fromJSON(Map<String, dynamic> jsonData) {
+    return PicturePairChoice(
+        picture: jsonData['picture'], description: jsonData['description'], correct: jsonData['correct']);
+  }
+}
+
+
+class Test6Data {
+  String name;
+  List<PicturePairChoice> choices;
+
+  Test6Data({this.name, this.choices});
+
+  factory Test6Data.fromJSON(Map<String, dynamic> jsonData) {
+    List<PicturePairChoice> pics = [];
+    for (var x in jsonData['choices']){
+      pics.add(PicturePairChoice.fromJSON(x));
+    }
+    return Test6Data(name: jsonData['name'], choices: pics);
+  }
+}
 
